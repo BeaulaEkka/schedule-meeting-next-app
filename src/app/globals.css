@@ -2,3 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+.cool-underline{
+    position:relative
+}
+
+.cool-underline::after{
+    content:'';
+    height:10px;
+    background-color: hsl(331, 92%, 62%,50%);
+    display:block;
+    position:absolute;
+    left:-8px;
+    bottom:5px;
+    width:0;
+    z-index:-1;
+    transform:skew(-21deg);
+    transition:all 0.5s ease-in-out;
+}
+
+.cool-underline.show-underline::after{
+    width:calc(100% + 16px);
+    
+}
