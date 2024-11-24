@@ -1,5 +1,8 @@
 import { nylas, nylasConfig } from "@/libs/nylas";
+import { session } from "@/libs/session";
 import { NextApiRequest } from "next";
+
+import { redirect } from "next/navigation";
 
 export async function GET(req: NextApiRequest) {
   console.log("Received callback from Nylas");
@@ -14,7 +17,7 @@ export async function GET(req: NextApiRequest) {
   }
 
   const codeExchangePayload = {
-    clientSectet: nylasConfig.apiKey,
+    clientSecet: nylasConfig.apiKey,
     clientId: nylasConfig.clientId,
     redirectUri: nylasConfig.callbackUri,
     code,
@@ -25,11 +28,9 @@ export async function GET(req: NextApiRequest) {
   //saves in RAM we will store it in cookie
   // You'll use this grantId to make API calls to Nylas perform actions on
   // behalf of this account. Store this in a database, associated with a user
-  process.env.NYLAS_GRANT_ID = grantId;
+  // process.env.NYLAS_GRANT_ID = grantId;
+  await session().set("grantId", grantId);
+  await session().set("email", email);
 
-  // This depends on implementation. If the browser is hitting this endpoint
-  // you probably want to use res.redirect('/some-successful-frontend-url')
-  res.json({
-    message: "OAuth2 flow completed successfully for grant ID: " + grantId,
-  });
+  redirect("/");
 }
