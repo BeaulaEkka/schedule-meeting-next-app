@@ -13,11 +13,6 @@ export const nylas = new Nylas({
 });
 
 
-const port = 3000;
 
-// Define your app routes
 
-// Start the server
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });   
+  
