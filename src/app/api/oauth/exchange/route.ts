@@ -1,13 +1,12 @@
 import { nylas, nylasConfig } from "@/libs/nylas";
 import { session } from "@/libs/session";
-import { NextApiRequest } from "next";
-
 import { redirect } from "next/navigation";
+import { NextRequest } from "next/server";
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   console.log("Received callback from Nylas");
 
-  const url = new URL(req.url);
+  const url = new URL(req.url as string);
   const code = url.searchParams.get("code");
 
   if (!code) {
@@ -17,8 +16,8 @@ export async function GET(req: NextApiRequest) {
   }
 
   const codeExchangePayload = {
-    clientSecet: nylasConfig.apiKey,
-    clientId: nylasConfig.clientId,
+    clientSecret: nylasConfig.apiKey,
+    clientId: nylasConfig.clientId as string,
     redirectUri: nylasConfig.callbackUri,
     code,
   };

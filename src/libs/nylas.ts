@@ -1,9 +1,5 @@
 import Nylas from "nylas";
 
-interface NylasConfig {
-  apiKey?: string;
-  apiUri?: string;
-}
 export const nylasConfig = {
   clientId: process.env.NYLAS_CLIENT_ID,
   callbackUri: "http://localhost:3000/api/oauth/exchange",
@@ -12,6 +8,6 @@ export const nylasConfig = {
 };
 
 export const nylas = new Nylas({
-  apiKey: nylasConfig.apiKey,
+  apiKey: nylasConfig.apiKey as string,
   apiUri: nylasConfig.apiUri,
 });
